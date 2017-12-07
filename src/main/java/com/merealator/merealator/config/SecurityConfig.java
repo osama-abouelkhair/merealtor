@@ -9,7 +9,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -19,6 +18,8 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
 
 import com.merealator.merealator.services.UserDetailsServiceImpl;
 
@@ -27,7 +28,7 @@ import com.merealator.merealator.services.UserDetailsServiceImpl;
 @EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 //@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-//@Order(2)
+//@Order(SecurityProperties.BASIC_AUTH_ORDER - 2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Value("${security.signing-key}")
@@ -83,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/realestate/**").access("hasAnyRole('USER')") 
         .and()
         .authorizeRequests().anyRequest().authenticated();	
-        */
+        
 		http
 			.csrf().disable()
 			.authorizeRequests()
@@ -92,7 +93,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated()
         .and().formLogin().disable() // disable form authentication
         .httpBasic();
-        
+        */
+		System.out.println("changes in sec config");
+		 http
+         .formLogin().disable() // disable form authentication
+         //.anonymous().disable() // disable anonymous user
+         .httpBasic().and()
+         // restricting access to authenticated users
+         .authorizeRequests()
+         .antMatchers("/user/**").permitAll()
+         .anyRequest().authenticated();
 	}
 
 	@Bean

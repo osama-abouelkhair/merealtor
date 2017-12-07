@@ -46,6 +46,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
     
     @Override
     public void configure(HttpSecurity http) throws Exception {
+    	System.out.println("changes");
         http
        /* .csrf().disable()
         .anonymous().disable()
@@ -65,7 +66,7 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
         ;
         */
         .csrf().disable()
-        .anonymous().disable()
+        //.anonymous().disable()
         .authorizeRequests()
         .antMatchers(HttpMethod.OPTIONS).permitAll()
         // when restricting access to 'Roles' you must remove the "ROLE_" part role
