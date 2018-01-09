@@ -74,6 +74,13 @@
 			<artifactId>spring-security-jwt</artifactId>
 			<version>1.0.0.RELEASE</version>
 		</dependency>
+		
+		<!-- to build frontend without restarting the server -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
 
 
 	</dependencies>
@@ -103,6 +110,17 @@
 			</plugin>
 
 		</plugins>
+		
+		<resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>static/src/**</include>
+                    <include>application.properties</include>
+                </includes>
+            </resource>
+         </resources>
 	</build>
 
 	<repositories>

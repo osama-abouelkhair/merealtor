@@ -1,11 +1,14 @@
 package com.merealator.merealator.config;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -31,8 +34,6 @@ import com.merealator.merealator.services.UserDetailsServiceImpl;
 //@Order(SecurityProperties.BASIC_AUTH_ORDER - 2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Value("${security.signing-key}")
-	private String signingKey;
 
 	@Value("${security.encoding-strength}")
 	private Integer encodingStrength;
@@ -94,36 +95,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and().formLogin().disable() // disable form authentication
         .httpBasic();
         */
-		System.out.println("changes in sec config");
-		 http
+		//--------------------
+		/* http
          .formLogin().disable() // disable form authentication
          //.anonymous().disable() // disable anonymous user
          .httpBasic().and()
          // restricting access to authenticated users
          .authorizeRequests()
          .antMatchers("/user/**").permitAll()
-         .anyRequest().authenticated();
+         .anyRequest().authenticated()
+		 .and()
+         .httpBasic();
+         */
+		 http
+         .csrf().disable()
+         .authorizeRequests()
+         .antMatchers(HttpMethod.OPTIONS).permitAll()
+         .antMatchers( HttpMethod.GET, "/","/public/**", "/resources/**"
+	        				,"/resources/static/**", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+         .antMatchers("/user/signup").permitAll()
+         .and()
+             .httpBasic();
 	}
 
-	@Bean
-	public JwtAccessTokenConverter accessTokenConverter() {
-		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey(signingKey);
-		return converter;
-	}
 
-	@Bean
-	public TokenStore tokenStore() {
-		return new JwtTokenStore(accessTokenConverter());
-	}
-
-	@Bean
-	@Primary
-	public DefaultTokenServices tokenServices() {
-		DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
-		defaultTokenServices.setTokenStore(tokenStore());
-		defaultTokenServices.setSupportRefreshToken(true);
-	    defaultTokenServices.setTokenEnhancer(accessTokenConverter());
-		return defaultTokenServices;
-	}
 }
