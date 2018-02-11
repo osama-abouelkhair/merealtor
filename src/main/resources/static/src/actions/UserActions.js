@@ -1,5 +1,6 @@
 import dispatcher from "../dispatcher";
 import * as RealestateAction from "../actions/RealestateActions";
+import BASE_URL from "../constants";
 
 export function login(user){
         var self = this;
@@ -8,9 +9,10 @@ export function login(user){
             body: user.email
             } 
         );*/
+        var url = 'oauth/token';
         $.ajax({
         //url: 'http://localhost:8080/users/login',
-        url: 'http://localhost:8089/oauth/token',
+        url: url,
         data: {
             "username": user.email,
             "password": user.password,
@@ -46,8 +48,9 @@ export function login(user){
 
 export function getUserDetails(email, access_token){
     var self = this;
+    var url = 'user/userdetails/' + email;
     var req = {
-        url: 'http://localhost:8089/user/userdetails/' + email,
+        url: url,
     type: 'GET',
     headers: {
         "Content-Type": "application/json",
@@ -70,8 +73,9 @@ export function getUserDetails(email, access_token){
 
 export function signup(user){
     var self = this;
+    var url = 'oauth/token?grant_type=client_credentials';
     $.ajax({
-    url: 'http://localhost:8089/oauth/token?grant_type=client_credentials',    
+    url: url,    
     type: 'POST',
     headers: {
         "Content-Type": "application/x-www-form-urlencoded",            
@@ -93,8 +97,9 @@ function signupWithtoken(user, token){
             password: user.password,
             //grant_type: "client_credentials"
             });
+            var url =  'user/signup';
             var requestObj={
-                url: 'http://localhost:8089/user/signup',
+                url:url,
                 data: userReq,
                 type: 'POST',
                 headers: {

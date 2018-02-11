@@ -1,4 +1,6 @@
 import dispatcher from "../dispatcher";
+import BASE_URL from "../constants";
+
 
 export function addRealestate(body){
         var self = this;
@@ -24,7 +26,7 @@ export function addRealestate(body){
 
 export function getAllRealestates(token){
     $.ajax({
-        url: 'http://localhost:8089/realestate',
+        url: BASE_URL + 'realestate',
         //data: {},
         context: this,
         dataType: 'json',

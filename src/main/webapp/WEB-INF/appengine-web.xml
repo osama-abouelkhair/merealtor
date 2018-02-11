@@ -8,5 +8,10 @@
     <system-properties>
         <property name="java.util.logging.config.file" value="/WEB-INF/classes/application.properties"/>
     </system-properties>
+<!--     <network> -->
+<!--     	<forwarded-port> -->
+<!--     	2222/tcp -->
+<!--     	</forwarded-port> -->
+<!--     </network> -->
     <sessions-enabled>true</sessions-enabled>
 </appengine-web-app>

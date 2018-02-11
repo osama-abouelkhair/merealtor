@@ -5,7 +5,7 @@ var path = require('path');
 module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./js/client.js",
+  entry: "./App.js",
   module: {
     loaders: [
       {
@@ -15,10 +15,14 @@ module.exports = {
         query: {
           presets: ['react', 'es2015', 'stage-0'],
           plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
-        }
+        },
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style-loader','css-loader']
       }
-    ]
-  }, 
+    ],
+  },
   output: {
     path: __dirname + "/src/",
     filename: "client.min.js"
