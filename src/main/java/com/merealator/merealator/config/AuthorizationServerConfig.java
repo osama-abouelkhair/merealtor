@@ -74,17 +74,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.scopes(scopeRead, scopeWrite)
 				.resourceIds(resourceIds)
 				.accessTokenValiditySeconds(accessTokenValiditySeconds)
-				.refreshTokenValiditySeconds(refreshTokenValiditySeconds)
-				/*.and()
-				.withClient(clientId)
-                .authorizedGrantTypes("client_credentials", grantType, "refresh_token")
-                .authorities("ROLE_REGISTER")
-                .scopes("register")
-                .accessTokenValiditySeconds(10)
-                .refreshTokenValiditySeconds(10)
-                .resourceIds(resourceIds)
-                .secret(clientSecret)*/
-                ;
+				.refreshTokenValiditySeconds(refreshTokenValiditySeconds);
 	}
 
 	@Override

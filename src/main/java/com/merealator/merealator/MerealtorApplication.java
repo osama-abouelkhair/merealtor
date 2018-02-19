@@ -15,14 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-//import com.merealator.merealator.test.MerealtorApplicationTests;
-
-//@Configuration
-//@EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class })
-// @SpringBootTest(classes = MerealtorApplicationTests.class)
-//@ComponentScan({ "com.merealator.merealator", "com.merealator.merealator.model" })
-// @EnableTransactionManagement
-//@EnableMongoRepositories(basePackages = { "com.merealator.merealator.repository" })
 @SpringBootApplication(scanBasePackages = { "com.merealator.merealator" },
 						exclude = { DataSourceAutoConfiguration.class })
 public class MerealtorApplication extends SpringBootServletInitializer {

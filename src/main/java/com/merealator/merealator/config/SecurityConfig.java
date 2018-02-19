@@ -52,7 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder passwordEncoder(){
 	   return new BCryptPasswordEncoder();
 	}
-
 	
 	@Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -81,38 +80,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/*http
-		.formLogin().disable() // disable form authentication
-        .anonymous().disable() // disable anonymous user
-        .httpBasic()
-        .and()
-        // restricting access to authenticated users
-        .authorizeRequests().antMatchers("/user/**").permitAll()
-        .antMatchers("/realestate/**").access("hasAnyRole('USER')") 
-        .and()
-        .authorizeRequests().anyRequest().authenticated();	
-        
-		http
-			.csrf().disable()
-			.authorizeRequests()
-        .antMatchers("/user/**").permitAll()
-        // restricting access to authenticated users
-        .anyRequest().authenticated()
-        .and().formLogin().disable() // disable form authentication
-        .httpBasic();
-        */
-		//--------------------
-		/* http
-         .formLogin().disable() // disable form authentication
-         //.anonymous().disable() // disable anonymous user
-         .httpBasic().and()
-         // restricting access to authenticated users
-         .authorizeRequests()
-         .antMatchers("/user/**").permitAll()
-         .anyRequest().authenticated()
-		 .and()
-         .httpBasic();
-         */
 		 http
          .csrf().disable()
          .authorizeRequests()
@@ -121,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        				,"/resources/static/**", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
          .antMatchers("/user/signup").permitAll()
          .and()
-             .httpBasic();
+         .httpBasic();
 	}
 
 
