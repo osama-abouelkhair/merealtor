@@ -3,7 +3,9 @@ import * as UserAction from "../actions/UserActions";
 import UserStore from "../stores/UserStore";
 import { withRouter, Redirect } from "react-router-dom";
 //import browserHistory from 'history';
-
+import { connect } from 'react-redux';
+import * as actionTypes from '../store/actions/actions';
+import * as actionCreators from '../store/actions/actions';
 
 class Login extends React.Component {
     constructor(props) {
@@ -45,32 +47,33 @@ class Login extends React.Component {
 
         const { email } = this.state;
         const { password } = this.state;
-        UserAction.login({
+        this.props.onLogin(email, password);
+        /*UserAction.login({
             email,
             password
-        });
+        });*/
         console.log("after login action");
 
     }
 
     componentWillMount() {
         console.log("mount");
-        UserStore.on("change", this.getSignupStatus);
+        //UserStore.on("change", this.getSignupStatus);
     }
 
     componentWillUnmount() {
-        UserStore.removeListener("change", this.getSignupStatus);
+        //UserStore.removeListener("change", this.getSignupStatus);
     }
 
     componentWillUpdate() {
         console.log("will update");
-        UserStore.on("change", this.getSignupStatus);
+        //UserStore.on("change", this.getSignupStatus);
     }
 
-    shouldComponentUpdate() {
-        console.debug('shouldComponentUpdate');
-        return true;
-    }
+    // shouldComponentUpdate() {
+    //     console.debug('shouldComponentUpdate');
+    //     //return true;
+    // }
 
     getSignupStatus(event) {
         const status = UserStore.signupStatus();
@@ -83,7 +86,7 @@ class Login extends React.Component {
     }
 
     render() {
-        if (this.state.redirect) {
+        if (this.props.access_token != undefined && this.props.access_token != '') {
             return <Redirect push to="/" />
         }
         const formControl = this.state.formControl;
@@ -131,4 +134,20 @@ class Login extends React.Component {
     }
 }
 
-export default withRouter(Login)
+const mapStateToProps = state => {
+    return {
+        redirect: state.user.redirect,
+        user: state.user.user,
+        access_token: state.user.access_token
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: (email, password) => {
+            dispatch(actionCreators.login(email, password))
+        }
+    };
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

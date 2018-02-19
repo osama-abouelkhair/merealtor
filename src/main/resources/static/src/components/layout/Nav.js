@@ -3,57 +3,26 @@ import { Link, Route, BrowserRouter, browserHistory, withRouter } from "react-ro
 import UserStore from "../../stores/UserStore";
 import * as UserAction from "../../actions/UserActions";
 import Signup from "../Signup";
-import LoginComp from "./LoginComp";
 import WelcomeComp from "./WelcomeComp";
 import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
+import { connect } from 'react-redux';
+
 
 
 class Nav extends React.Component {
   constructor(props) {
     super(props)
     console.log(props);
+
+    //this.getUser = this.getUser.bind(this);
+
     this.state = {
-      collapsed: true,
-      user: {
-        fullName: "",
-        email: "",
-        access_token: ""
-      },
-      email: "",
-      password: ""
+      collapsed: false,
+
     };
-    this.getUser = this.getUser.bind(this);
-    const user = UserStore.getUser();
-    if (user.access_token != "") {
-      this.state = {
-        collapsed: true,
-        user: user
-      };
-    } else {
-      this.state = {
-        collapsed: true,
-        user: {
-          fullName: "",
-          email: "",
-          access_token: ""
-        }
-      };
-    }
-  }
 
-  handleChange(event, attribute) {
-    var newState = this.state;
-    newState[attribute] = event.target.value;
-    this.setState(newState);
-  }
-
-
-  getUser() {
-
-    const user = UserStore.getUser();
-    this.setState({ user: user });
   }
 
   toggleCollapse() {
@@ -61,25 +30,14 @@ class Nav extends React.Component {
     this.setState({ collapsed });
   }
 
-  componentWillMount() {
-    UserStore.on("change", this.getUser);
-  }
 
-  componentWillUnmount() {
-    UserStore.removeListener("change", this.getUser);
-  }
-
-  componentWillUpdate() {
-    UserStore.on("change", this.getUser);
-  }
-
-  shouldComponentUpdate() {
-    console.debug('shouldComponentUpdate');
-    if (this.state.user.fullName != undefined && this.state.user.fullName != "") {
-      return false;
-    }
-    return true;
-  }
+  // shouldComponentUpdate() {
+  //   console.debug('shouldComponentUpdate');
+  //   if (this.state.user.fullName != undefined && this.state.user.fullName != "") {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
 
   render() {
@@ -92,32 +50,33 @@ class Nav extends React.Component {
     const navClass = collapsed ? "collapse" : "";
 
     var navComp = null;
-    const { access_token } = this.state.user;
-    const { email } = this.state.user;
+    const { access_token } = this.props;
+    //const { email } = this.state.user;
 
-    if (access_token == "") {
+    if (access_token !== undefined && access_token !== '') {
       //navComp = <LoginComp />;
-      navComp = (
 
-        <div>
-          <Button raised color="primary" component={Link} to={{pathname: "/login"} }>Login
-            {/* <Link class="btn btn-link my-2 my-sm-0 btn-sm" to="/login">Login</Link> */}
-          </Button>
-          <Link class="btn btn-link my-2 my-sm-0 btn-sm" to={{pathname: "/signup"}}>Sign Up</Link>
-        </div>
-
-      )
-    } else {
-      //navComp = <WelcomeComp user={this.state.user} />;
-      if (this.state.user.fullName === undefined || this.state.user.fullName === "") {
-        UserAction.getUserDetails(email, access_token);
-      }
-      const { fullName } = this.state.user;
+      const { fullName } = this.props.user;
       navComp = (
         <div>
           <h3>Hello {fullName} </h3>
         </div>
       )
+
+
+    } else {
+      //navComp = <WelcomeComp user={this.state.user} />;
+      // if (this.props.user.fullName === undefined || this.props.user.fullName === "") {
+      //   UserAction.getUserDetails(email, access_token);
+      // }
+      navComp =
+        (<div>
+          <Button raised color="primary" component={Link} to={{ pathname: "/login" }}>Login
+        {/* <Link class="btn btn-link my-2 my-sm-0 btn-sm" to="/login">Login</Link> */}
+          </Button>
+          <Link class="btn btn-link my-2 my-sm-0 btn-sm" to={{ pathname: "/signup" }}>Sign Up</Link>
+        </div>
+        )
     }
 
     return (
@@ -132,7 +91,7 @@ class Nav extends React.Component {
           <ul class="navbar-nav mr-auto">
             <li class={"nav-item" + featuredClass}>
               <Link class={"nav-link"} to="/categories" onClick={this.toggleCollapse.bind(this)}>Categories</Link>
-              
+
             </li>
 
             <li class={"nav-item" + settingsClass}>
@@ -149,4 +108,12 @@ class Nav extends React.Component {
 
 }
 
-export default withRouter(Nav);
+const mapStateToProps = state => {
+  return {
+    redirect: state.user.redirect,
+    user: state.user.user,
+    access_token: state.user.access_token
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(Nav));

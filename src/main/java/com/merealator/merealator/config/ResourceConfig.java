@@ -76,8 +76,9 @@ public class ResourceConfig extends ResourceServerConfigurerAdapter {
 				.csrf().disable()
 				.authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
+                //.antMatchers("*").permitAll()
 				.antMatchers(HttpMethod.GET, "/", "/public/**", "/resources/**", "/resources/static/**", "/*.html",
-						"/**/*.html", "/**/*.css", "/**/*.js").permitAll()				
+						"/**/*.html", "/**/*.css", "/**/*.js", "/**/*.png").permitAll()		
 				.antMatchers("/user/signup").hasAuthority("ROLE_TRUSTED_CLIENT")
 				.antMatchers(HttpMethod.GET, "/user/userdetails").hasRole("USER")
 				.antMatchers("/**").authenticated();

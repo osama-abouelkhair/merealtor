@@ -31,9 +31,4 @@ public class MerealtorApplication extends SpringBootServletInitializer {
 		SpringApplication.run(MerealtorApplication.class, args);
 	}
 	
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder(){
-	   return new BCryptPasswordEncoder();
-	}
-
 }

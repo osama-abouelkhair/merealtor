@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link, withRouter, Switch } from "react-router-dom";
+import {connect} from  'react-redux';
 
 import Footer from "../components/layout/Footer";
 import Nav from "../components/layout/Nav";
@@ -34,7 +35,7 @@ const theme = createMuiTheme({
 });
 
 
-export default class Layout extends React.Component {
+class Layout extends React.Component {
 
   constructor(props) {
     super(props);
@@ -68,3 +69,6 @@ export default class Layout extends React.Component {
     );
   }
 }
+
+
+export default Layout;

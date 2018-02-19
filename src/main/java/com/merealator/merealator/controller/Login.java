@@ -34,15 +34,15 @@ public class Login {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 	
-	@PostMapping(value="/login")
-	@ResponseBody
-    public void login(HttpServletRequest request){
-		String authorization = request.getHeader("Authorization");
-        if (authorization != null && authorization.contains("Bearer")) {
-            String tokenId = authorization.substring("Bearer".length() + 1);
-            tokenServices.revokeToken(tokenId);
-        }
-    }
+//	@PostMapping(value="/login")
+//	@ResponseBody
+//    public void login(HttpServletRequest request){
+//		String authorization = request.getHeader("Authorization");
+//        if (authorization != null && authorization.contains("Bearer")) {
+//            String tokenId = authorization.substring("Bearer".length() + 1);
+//            tokenServices.revokeToken(tokenId);
+//        }
+//    }
 	
 	@GetMapping(value="/userdetails/{email}")
 	@ResponseBody

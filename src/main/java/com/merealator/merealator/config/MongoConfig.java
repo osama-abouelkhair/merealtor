@@ -39,7 +39,6 @@ public class MongoConfig extends AbstractMongoConfiguration {
 
 	@Override
 	public MongoClient mongoClient() {
-		//return new MongoClient(new MongoClientURI("mongodb://merealator:merealator@localhost:27017/merealatordb?authSource=merealatordb"));
 		return new MongoClient(new MongoClientURI(uri));
 	}
 
