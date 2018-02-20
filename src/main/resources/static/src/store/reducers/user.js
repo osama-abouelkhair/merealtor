@@ -18,6 +18,11 @@ const reducer = (state = initialState, action) => {
             user: action.user,
             access_token: action.access_token,
         }
+    } else if (action.type === actionTypes.SIGNUP) {
+        return {
+            ...state,
+            user: action.user
+        }
     }
     return state;
 };

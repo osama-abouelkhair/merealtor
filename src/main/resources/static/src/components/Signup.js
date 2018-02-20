@@ -2,7 +2,9 @@ import React from "react";
 import * as UserAction from "../actions/UserActions";
 import UserStore from "../stores/UserStore";
 import { withRouter, Redirect } from "react-router-dom";
-//import browserHistory from 'history';
+import { connect } from 'react-redux';
+import * as actionTypes from '../store/actions/actions';
+import * as actionCreators from '../store/actions/actions';
 
 
 class Signup extends React.Component {
@@ -21,10 +23,7 @@ class Signup extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.signup = this.signup.bind(this);
-        this.getSignupStatus = this.getSignupStatus.bind(this);
         console.log("props " + JSON.stringify(this.props));
-        console.log("history " + this.props.history.toString());
-        const { history } = this.props;
     }
 
     handleChange(event) {
@@ -45,77 +44,28 @@ class Signup extends React.Component {
             newState[target.name] = target.value;
             this.setState(newState);
         }
-
-        /*
-        if (event.target !== undefined) {
-            this.setState( (prevState, props) => {
-                if (target.name === "confirmPassword") {
-                    if (prevState.password !== target.value) {
-                        newState.formControl = "form-control-danger";
-                        newState.danger = "has-danger";
-                        newState.passwordMatch = "Password did not match";
-                    } else {
-                        newState.formControl = "form-control-success";
-                        newStatedanger = "has-success";
-                        newState.passwordMatch = "Password Match";
-                    }
-                    newState[target.name] = target.value;
-                    return newState;
-            }
-            )
-                    
-                
-            }
-        }
-
-        */
     }
 
     signup(event) {
         event.preventDefault();
-
         const { fullName } = this.state;
         const { email } = this.state;
         const { password } = this.state;
-        UserAction.signup({
+        this.props.onSignup({
             fullName,
             email,
             password
-        })
+        });
     }
 
-    componentWillMount() {
-        console.log("mount");
-        UserStore.on("change", this.getSignupStatus);
-    }
-
-    componentWillUnmount() {
-        UserStore.removeListener("change", this.getSignupStatus);
-    }
-
-    componentWillUpdate() {
-        console.log("will update");
-        UserStore.on("change", this.getSignupStatus);
-    }
-
-    shouldComponentUpdate() {
-        console.debug('shouldComponentUpdate');
-        return true;
-    }
-
-    getSignupStatus(event) {
-        const status = UserStore.signupStatus();
-
-        console.log("status ", status);
-        if (status) {
-            this.setState({ redirect: true })
-        }
-
-    }
 
     render() {
-        if (this.state.redirect) {
+        if (this.props.access_token != undefined && this.props.access_token != '') {
             return <Redirect push to="/" />
+        }
+        if (this.props.user.fullName !== undefined && this.props.user.fullName !== '') {
+            //return <Redirect push to="/" />
+            this.props.onLogin(this.props.user.email, this.state.password);        
         }
         const formControl = this.state.formControl;
         const danger = this.state.danger;
@@ -183,5 +133,23 @@ class Signup extends React.Component {
         );
     }
 }
+const mapStateToProps = state => {
+    return {
+        user: state.user.user,
+        access_token: state.user.access_token
+    };
+};
 
-export default withRouter(Signup)
+const mapDispatchToProps = dispatch => {
+    return {
+        onSignup: (user) => {
+            dispatch(actionCreators.signup(user))
+        },
+        onLogin: (email, password) => {
+            dispatch(actionCreators.login(email, password))
+        }
+    };
+};
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Signup))

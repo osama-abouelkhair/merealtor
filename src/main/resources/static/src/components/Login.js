@@ -56,35 +56,6 @@ class Login extends React.Component {
 
     }
 
-    componentWillMount() {
-        console.log("mount");
-        //UserStore.on("change", this.getSignupStatus);
-    }
-
-    componentWillUnmount() {
-        //UserStore.removeListener("change", this.getSignupStatus);
-    }
-
-    componentWillUpdate() {
-        console.log("will update");
-        //UserStore.on("change", this.getSignupStatus);
-    }
-
-    // shouldComponentUpdate() {
-    //     console.debug('shouldComponentUpdate');
-    //     //return true;
-    // }
-
-    getSignupStatus(event) {
-        const status = UserStore.signupStatus();
-
-        console.log("status ", status);
-        if (status) {
-            this.setState({ redirect: true })
-        }
-
-    }
-
     render() {
         if (this.props.access_token != undefined && this.props.access_token != '') {
             return <Redirect push to="/" />
@@ -136,7 +107,6 @@ class Login extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        redirect: state.user.redirect,
         user: state.user.user,
         access_token: state.user.access_token
     };
