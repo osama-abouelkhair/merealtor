@@ -13,43 +13,43 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.merealator.merealator.model.RealEstate;
-import com.merealator.merealator.repository.RealEstateRepository;
+import com.merealator.merealator.model.Realestate;
+import com.merealator.merealator.repository.RealestateRepository;
 
 @RestController
 @RequestMapping(value="/merealtor/realestate")
 public class MainController {
 
 	@Autowired
-	private RealEstateRepository realEstateRepository;
+	private RealestateRepository realestateRepository;
 
 	@RequestMapping("/{title}")
-    public RealEstate getRecognition(@PathVariable("title") String title){
-        return realEstateRepository.findByTitle(title);
+    public Realestate getRecognition(@PathVariable("title") String title){
+        return realestateRepository.findByTitle(title);
     }
 	
 	@RequestMapping
 	//@PreAuthorize("hasRole('ROLE_USER')")
-	public List<RealEstate> findAll() {
+	public List<Realestate> findAll() {
 		
-		List<RealEstate> realEstates = realEstateRepository.findAll();
+		List<Realestate> realEstates = realestateRepository.findAll();
 		
 		return realEstates;
 
 	}
 	
 	@PostMapping
-    public ResponseEntity<String> addRealEstate(@RequestBody RealEstate realEstate){
-        realEstateRepository.save(realEstate);
+    public ResponseEntity<String> addRealEstate(@RequestBody Realestate realEstate){
+        realestateRepository.save(realEstate);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     //This is of course a very naive implementation! We are assuming unique names...
     @DeleteMapping("/{title}")
     public ResponseEntity<String> deleteRealEstate(@PathVariable  String title){
-        RealEstate realEstate = realEstateRepository.findByTitle(title);
+        Realestate realEstate = realestateRepository.findByTitle(title);
         if(realEstate != null) {
-        	realEstateRepository.delete(realEstate);
+        	realestateRepository.delete(realEstate);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

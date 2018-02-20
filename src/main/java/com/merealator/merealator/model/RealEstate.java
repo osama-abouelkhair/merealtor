@@ -9,22 +9,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "realestate")
-public class RealEstate {
+public class Realestate {
 
-	public RealEstate() {
+	public Realestate() {
 		
 	}
 	
-	public RealEstate(String title, LocalDateTime dateTime) {
-		this.title = title;
+	public Realestate(String name, LocalDateTime dateTime) {
+		this.name = name;
 		this.dateTime = dateTime;
 	}
 	
     //private long id;
     @Field private String id;
 
-    @Indexed(unique = true)
-    private String title;
+    private String name;
+    
+    private String description;
 
     private LocalDateTime dateTime;
     
@@ -36,12 +37,20 @@ public class RealEstate {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public LocalDateTime getDateTime() {

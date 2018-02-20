@@ -1,11 +1,8 @@
 import React from "react";
-import * as UserAction from "../actions/UserActions";
-import UserStore from "../stores/UserStore";
 import { withRouter, Redirect } from "react-router-dom";
-//import browserHistory from 'history';
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/actions/actions';
-import * as actionCreators from '../store/actions/actions';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as actionCreators from '../../store/actions/index';
 
 class Login extends React.Component {
     constructor(props) {
@@ -20,7 +17,6 @@ class Login extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.login = this.login.bind(this);
-        this.getSignupStatus = this.getSignupStatus.bind(this);
         console.log("props " + JSON.stringify(this.props));
         console.log("history " + this.props.history.toString());
         const { history } = this.props;

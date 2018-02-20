@@ -1,10 +1,8 @@
 import React from "react";
-import * as UserAction from "../actions/UserActions";
-import UserStore from "../stores/UserStore";
 import { withRouter, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/actions/actions';
-import * as actionCreators from '../store/actions/actions';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as actionCreators from '../../store/actions/index';
 
 
 class Signup extends React.Component {

@@ -1,13 +1,12 @@
 import axios from 'axios';
 import qs from 'qs';
 
-export const LOGIN = 'LOGIN';
-export const SIGNUP = 'SIGNUP';
+import * as actionTypes from './actionTypes';
 
 const dispatchLogin = (access_token, user) => {
 
     return {
-        type: LOGIN,
+        type: actionTypes.LOGIN,
         user,
         access_token
     };
@@ -15,7 +14,7 @@ const dispatchLogin = (access_token, user) => {
 
 const dispatchSignup = (user) => {
     return {
-        type: SIGNUP,
+        type: actionTypes.SIGNUP,
         user
     }
 }

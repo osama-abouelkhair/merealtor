@@ -1,9 +1,6 @@
 import React from "react";
 import { Link, Route, BrowserRouter, browserHistory, withRouter } from "react-router-dom";
-import UserStore from "../../stores/UserStore";
-import * as UserAction from "../../actions/UserActions";
-import Signup from "../Signup";
-import WelcomeComp from "./WelcomeComp";
+import Signup from "../Signup/Signup";
 import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';

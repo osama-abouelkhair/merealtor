@@ -2,18 +2,17 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link, withRouter, Switch } from "react-router-dom";
 import {connect} from  'react-redux';
 
-import Footer from "../components/layout/Footer";
-import Nav from "../components/layout/Nav";
-import Header from "../components/layout/Header";
+import Footer from "../Footer/Footer";
+import Nav from "../Nav/Nav";
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 
 
-import RealestateList from "./RealestateList";
-import Projects from "./Projects";
-import Settings from "./Settings";
-import Signup from "../components/Signup";
-import Login from "../components/Login";
+import RealestateList from "../RealestateList";
+import Projects from "../Project/Projects";
+import Settings from "../Settings";
+import Signup from "../Signup/Signup";
+import Login from "../Login/Login";
 
 import Reboot from 'material-ui/Reboot';
 import blue from 'material-ui/colors/blue';

@@ -1,9 +1,6 @@
 import React from "react";
 
-import Realestate from "../components/Realestate";
-import RealestateStore from "../stores/RealestateStore";
-import * as RealestateAction from "../actions/RealestateActions";
-import UserStore from "../stores/UserStore";
+import Realestate from "../components/Realestate/Realestate";
 
 export default class CategoryList extends React.Component {
     constructor() {

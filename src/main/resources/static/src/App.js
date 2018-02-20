@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route, IndexRoute } from 'react-router-dom';
 import Reboot from 'material-ui/Reboot';
 import axios from 'axios';
-import Layout from './containers/Layout';
+import Layout from './containers/Layout/Layout';
 import './App.css';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import userReducer from './store/reducers/user';
